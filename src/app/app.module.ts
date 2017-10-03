@@ -17,6 +17,8 @@ import { CoreModule } from './core/core.module';
 // Shared/Widget
 import { SharedModule } from './shared/shared.module'
 
+import { ObjNgFor } from './core/obj-keys.pipe';
+
 // Feature Modules
 import { ItemModule } from './items/shared/item.module';
 import { UploadModule } from './uploads/shared/upload.module';
@@ -27,6 +29,7 @@ import { UiModule } from './ui/shared/ui.module';
 @NgModule({
   declarations: [
     AppComponent,
+    ObjNgFor
   ],
   imports: [
     BrowserModule,

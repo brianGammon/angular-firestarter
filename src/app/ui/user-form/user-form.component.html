@@ -1,8 +1,8 @@
 
 <form [formGroup]="userForm"  *ngIf="newUser"  (ngSubmit)="signup()">
 
-  <h3>New User Signup</h3>
-  <p class="btn btn-sm btn-secondary" (click)="toggleForm()">Already Registered?</p>
+  <h3>Sign Up</h3>
+  <a (click)="toggleForm()">Already registered?</a>
   <hr>
 
   <label for="email">Email</label>
@@ -32,8 +32,8 @@
 
 <form [formGroup]="userForm"  *ngIf="!newUser"  (ngSubmit)="login()">
 
-  <h3>Existing User Login</h3>
-  <p class="btn btn-sm btn-secondary" (click)="toggleForm()">New User?</p>
+  <h3>Sign In</h3>
+  <a (click)="toggleForm()">Need to sign up instead?</a>
   <hr>
 
   <label for="email">Email</label>

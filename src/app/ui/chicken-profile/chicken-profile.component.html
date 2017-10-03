@@ -1,0 +1,22 @@
+<div *ngIf="chicken | async; let chicken">
+    <p class="image is-128x128">
+        <img [src]="chicken.photo">
+      </p>
+    <div>{{ chicken.name }}</div>
+    <div>{{ chicken.description || 'Default message'}}</div>
+    <hr>
+    <div *ngIf="total > 0">
+      <div class="level">
+        <div class="level-left">
+          Total eggs laid: {{ total }}
+        </div>
+        <div class="level-right">
+            Heaviest: {{ heaviest.weight }}g <small>on {{ heaviest.date }}</small>
+          </div>
+      </div>
+    </div>
+</div>
+
+{{ egggg | json }}
+
+

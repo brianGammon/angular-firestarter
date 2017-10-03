@@ -1,0 +1,39 @@
+<div *ngIf="flock | async; let flock; loading">
+  <div *ngIf="!flock.name" class="notification is-danger">
+    Flock not found
+  </div>
+
+  <div *ngIf="flock.name">
+    <div class="level is-mobile">
+      <div class="level-item">
+        <h1>{{ flock.name }}</h1>
+      </div>
+      <div class="level-item"><button class="button is-small" routerLink="/chicken-add">Add Chicken</button></div>
+    </div>
+
+
+    <div class="chicken-list">
+      <div *ngFor="let chicken of chickens | async" class="media">
+        <div class="media-left">
+          <p class="image is-64x64">
+            <a [routerLink]="['/chicken', chicken.$key]"><img [src]="chicken.photo ? chicken.photo : 'http://bulma.io/images/placeholders/128x128.png'"></a>
+          </p>
+        </div>
+        <div class="media-content">
+          <div class="content">
+            <p>
+              <a [routerLink]="['/chicken', chicken.$key]"><strong>{{ chicken.name }}</strong></a>
+              <br><small>{{ chicken.dob }}</small>
+            </p>
+          </div>
+        </div>
+        <div class="media-right">
+          <button class="delete is-medium" (click)="deleteChicken(chicken.$key)"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #loading>Loading flock...</ng-template>

@@ -1,0 +1,68 @@
+<div *ngIf="eggs | async; let eggs">
+  <div *ngIf="chickens | async; let chickens">
+
+    <div class="level is-mobile">
+      <div class="level-item has-text-centered">
+        <a class="button" [routerLink]="['/eggs', previousDate]">
+              <span class="icon is-small">
+                <i class="fa fa-chevron-left"></i>
+              </span>
+            </a>
+      </div>
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">Date</p>
+          <p class="title is-4">{{ dateString | date }}</p>
+        </div>
+      </div>
+
+      <div class="level-item has-text-centered">
+          <a class="button" [routerLink]="['/eggs', nextDate]">
+              <span class="icon is-small">
+                <i class="fa fa-chevron-right"></i>
+              </span>
+            </a>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="level is-mobile">
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">Eggs Laid</p>
+          <p class="title is-4">{{ eggs.length }}</p>
+        </div>
+      </div>
+      <div class="level-item has-text-centered">
+          <button [routerLink]="['/add']" [queryParams]="{ date: dateString}" class="button is-primary">Add Egg</button>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="egg-list">
+      <div *ngFor="let egg of eggs" class="media">
+        <div class="media-left">
+          <p class="image is-64x64">
+            <a [routerLink]="['/chicken', egg.chicken]"><img [src]="chickens[egg.chicken].photo ? chickens[egg.chicken].photo : 'http://bulma.io/images/placeholders/128x128.png'"></a>
+          </p>
+        </div>
+        <div class="media-content">
+          <div class="content">
+            <p>
+              <a [routerLink]="['/chicken', egg.chicken]"><strong>{{ chickens[egg.chicken].name }}</strong></a>
+              <br> Weight: {{ egg.weight }}g <span *ngIf="egg.damaged" class="icon has-text-danger">
+                  <i class="fa fa-warning"></i>
+                </span>
+              <!-- <br> <span>This egg was smashed by the other chickens</span> -->
+            </p>
+          </div>
+        </div>
+        <div class="media-right">
+          <button class="delete is-medium" (click)="deleteEgg(egg.$key)"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

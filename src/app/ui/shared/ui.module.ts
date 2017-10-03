@@ -14,7 +14,12 @@ import { UserFormComponent } from '../user-form/user-form.component';
 import { TopNavComponent } from '../top-nav/top-nav.component';
 import { FooterNavComponent } from '../footer-nav/footer-nav.component';
 import { ReadmePageComponent } from '../readme-page/readme-page.component';
-
+import { EggsDailyComponent } from '../eggs-daily/eggs-daily.component';
+import { EggsAddComponent } from '../eggs-add/eggs-add.component';
+import { ChickenProfileComponent } from '../chicken-profile/chicken-profile.component';
+import { FlocksComponent } from '../flocks/flocks.component';
+import { FlockComponent } from '../flock/flock.component';
+import { ChickenAddComponent } from '../chicken-add/chicken-add.component';
 
 
 @NgModule({
@@ -32,7 +37,13 @@ import { ReadmePageComponent } from '../readme-page/readme-page.component';
     TopNavComponent,
     FooterNavComponent,
     UserFormComponent,
-    ReadmePageComponent
+    ReadmePageComponent,
+    EggsDailyComponent,
+    EggsAddComponent,
+    ChickenProfileComponent,
+    FlocksComponent,
+    FlockComponent,
+    ChickenAddComponent
   ],
   exports: [
     TopNavComponent,
