@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../core/auth.service';
 import * as moment from 'moment';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -9,6 +10,7 @@ import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angula
   styleUrls: ['./eggs-add.component.scss']
 })
 export class EggsAddComponent implements OnInit {
+  flockId: any;
   chickens: FirebaseListObservable<any> = null;
   // flock: FirebaseObjectObservable<any> = null;
   eggForm: FormGroup;
@@ -38,6 +40,7 @@ export class EggsAddComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private authService: AuthService,
     private fb: FormBuilder,
     private db: AngularFireDatabase
   ) { }
@@ -45,8 +48,18 @@ export class EggsAddComponent implements OnInit {
   ngOnInit() {
     const defaultDate = this.route.snapshot.queryParamMap.get('date') || moment().format('YYYY-MM-DD');
     console.log(defaultDate);
-    const chickensPath = 'chickens/flockId1'
-    this.chickens = this.db.list(chickensPath);
+
+    this.authService.currentUserObservable.subscribe(authState => {
+      if (authState) {
+        this.db.object('/users/' + authState['uid']).subscribe(user => {
+          this.flockId = user.currentFlockId;
+          console.log(this.flockId);
+
+          const chickensPath = 'chickens/' + this.flockId;
+          this.chickens = this.db.list(chickensPath);
+        });
+      }
+    });
 
     this.eggForm = this.fb.group({
       'dateLaid': [defaultDate, [
@@ -69,7 +82,7 @@ export class EggsAddComponent implements OnInit {
   }
 
   addEgg() {
-    const itemPath = 'eggs/flockId1';
+    const itemPath = 'eggs/' + this.flockId;
     const items = this.db.list(itemPath);
     const newEgg = {
       'date': this.eggForm.value['dateLaid'],

@@ -32,7 +32,7 @@ export class EggsDailyComponent implements OnInit {
           this.route.params.subscribe(params => {
             this.setNavDates(params['date']);
             this.dateString = params['date'];
-            const eggsPath = 'eggs/flockId1';
+            const eggsPath = 'eggs/' + this.flockId;
             this.eggs = this.db.list(eggsPath, {
               query: {
                 orderByChild: 'date',
@@ -40,7 +40,7 @@ export class EggsDailyComponent implements OnInit {
               }
             });
 
-            const chickensPath = 'chickens/flockId1';
+            const chickensPath = 'chickens/' + this.flockId;
             this.chickens = this.db.object(chickensPath);
 
           })

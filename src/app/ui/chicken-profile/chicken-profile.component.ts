@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../core/auth.service';
 import * as _ from 'lodash';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 
@@ -8,41 +9,49 @@ import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable }
   styleUrls: ['./chicken-profile.component.scss']
 })
 export class ChickenProfileComponent implements OnInit {
-  // eggs: FirebaseListObservable<any> = null;
   chicken: FirebaseObjectObservable<any> = null;
   heaviest: any;
   total: number;
-  private chickenId: string;
+  flockId: string;
 
   constructor(
     private route: ActivatedRoute,
+    private authService: AuthService,
     private db: AngularFireDatabase
   ) {
     this.route.params.subscribe(params => {
-      console.log(params);
+      const chickenId = params['chickenId'];
 
-      this.chickenId = params['chickenId'];
-      this.chicken = this.db.object('chickens/flockId1/' + this.chickenId);
+      this.authService.currentUserObservable.subscribe(authState => {
+        if (authState) {
+          this.db.object('/users/' + authState['uid']).subscribe(user => {
+            this.flockId = user.currentFlockId;
+
+            this.chicken = this.db.object(`chickens/${this.flockId}/${chickenId}`);
+
+            const eggsPath = `eggs/${this.flockId}`;
+            const eggs = this.db.list(eggsPath, {
+              query: {
+                orderByChild: 'chicken',
+                equalTo: chickenId
+              }
+            });
+
+            eggs.subscribe(data => {
+              // this.getStreak(eggs);
+              this.total = data.length;
+              if (this.total > 0) {
+                this.heaviest = this.getHeaviest(data);
+              }
+              console.log(this.heaviest);
+            });
+          });
+        }
+      });
     })
   }
 
   ngOnInit() {
-    const eggsPath = 'eggs/flockId1';
-    const eggs = this.db.list(eggsPath, {
-      query: {
-        orderByChild: 'chicken',
-        equalTo: this.chickenId
-      }
-    });
-
-    eggs.subscribe(data => {
-      // this.getStreak(eggs);
-      this.total = data.length;
-      if (this.total > 0) {
-        this.heaviest = this.getHeaviest(data);
-      }
-      console.log(this.heaviest);
-    });
   }
 
   getStreak(eggs) {

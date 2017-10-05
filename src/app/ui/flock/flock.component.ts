@@ -18,12 +18,13 @@ export class FlockComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.flockId = params['flockId'];
       this.flock = this.db.object('flocks/' + this.flockId);
+      const chickenPath = 'chickens/' + this.flockId;
+      this.chickens = this.db.list(chickenPath);
     })
   }
 
   ngOnInit() {
-    const chickenPath = 'chickens/' + this.flockId;
-    this.chickens = this.db.list(chickenPath);
+
   }
 
   deleteChicken(key) {

@@ -52,7 +52,8 @@ export class ChickenAddComponent implements OnInit {
 
   addChicken() {
     console.log(this.chickenForm.value);
-    const itemPath = 'chickens/flockId1';
+    const flockId = 'flockId2';
+    const itemPath = 'chickens/' + flockId;
     const items = this.db.list(itemPath);
 
     items.push(this.chickenForm.value)

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
+import { AuthService } from '../../core/auth.service';
 
 @Component({
   selector: 'top-nav',
@@ -23,19 +25,49 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
   ]
 })
 export class TopNavComponent implements OnInit {
+  user: any;
+  flocks: any;
+  currentFlock: any;
 
   // collapse:string = "closed";
   show = false;
 
-  constructor() { }
+  constructor(
+    private authService: AuthService,
+    private db: AngularFireDatabase
+  ) { }
 
   ngOnInit() {
+    this.authService.currentUserObservable.subscribe(authState => {
+      if (authState) {
+        this.db.object('users/' + authState['uid']).subscribe(user => {
+
+          this.user = user;
+          this.db.list('flocks', {
+            query: {
+              orderByChild: 'users/' + authState['uid'],
+              equalTo: true
+            }
+          }).subscribe(result => {
+
+            this.flocks = result;
+            this.currentFlock = result.find(flock => flock.$key === user.currentFlockId);
+          });
+        })
+
+      }
+    })
   }
 
   toggleCollapse() {
     this.show = !this.show
     // this.collapse = this.collapse == "open" ? 'closed' : 'open';
 
+  }
+
+  setCurrentFlockId(flockId: string) {
+    const ref = this.db.object('users/' + this.user.$key);
+    ref.update({ currentFlockId: flockId});
   }
 
 }
