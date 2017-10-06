@@ -3,8 +3,16 @@
     <a class="navbar-item" routerLink="/">
         <img src="assets/images/flockr_head_small.png" alt="flockr" width="30"> flockr
       </a>
-    <div class="navbar-item">
+    <a class="navbar-item" [routerLink]="['/flocks', 'flockId1']">
       {{ currentFlock?.name }}
+    </a>
+    <div class="navbar-item">
+      <a class="button is-small is-primary is-outlined" routerLink="/add">
+        <span class="icon">
+          <i class="fa fa-plus"></i>
+        </span>
+        <span>Egg</span>
+      </a>
     </div>
 
     <div class="navbar-burger burger" (click)="toggleCollapse()" [ngClass]="{'is-active': show}" data-target="navMenuTransparentExample">
@@ -15,13 +23,6 @@
   </div>
 
   <div id="navMenuTransparentExample" class="navbar-menu" [ngClass]="{'is-active': show}">
-    <div class="navbar-start">
-        <a class="navbar-item" routerLink="/eggs/2017-09-30">
-          <span class="icon">
-            <i class="fa fa-plus"></i>
-          </span> Eggs
-        </a>
-    </div>
 
     <div class="navbar-end">
       <div class="navbar-item has-dropdown is-hoverable">
