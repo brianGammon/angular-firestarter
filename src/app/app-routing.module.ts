@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'chicken/:chickenId', component: ChickenProfileComponent, canActivate: [AuthGuard] },
   { path: 'chicken-add', component: ChickenAddComponent, canActivate: [AuthGuard] },
   { path: 'flocks', component: FlocksComponent, canActivate: [AuthGuard] },
-  { path: 'flocks/:flockId', component: FlockComponent, canActivate: [AuthGuard] },
+  { path: 'flock', component: FlockComponent, canActivate: [AuthGuard] },
   { path: 'items', component: ItemsListComponent, canActivate: [AuthGuard]},
   { path: 'uploads', loadChildren: './uploads/shared/upload.module#UploadModule' },
   { path: 'today', component: EggsDailyComponent, canActivate: [AuthGuard]},

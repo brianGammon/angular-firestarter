@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../core/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 
@@ -13,14 +14,18 @@ export class FlockComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private authService: AuthService,
     private db: AngularFireDatabase
   ) {
-    this.route.params.subscribe(params => {
-      this.flockId = params['flockId'];
-      this.flock = this.db.object('flocks/' + this.flockId);
-      const chickenPath = 'chickens/' + this.flockId;
-      this.chickens = this.db.list(chickenPath);
-    })
+    this.authService.currentUserObservable.subscribe(authState => {
+      if (authState) {
+        this.db.object(`users/${authState['uid']}`).subscribe((user) => {
+          this.flock = this.db.object(`flocks/${user.currentFlockId}`);
+          const chickenPath = `chickens/${user.currentFlockId}`;
+          this.chickens = this.db.list(chickenPath);
+        });
+      }
+    });
   }
 
   ngOnInit() {

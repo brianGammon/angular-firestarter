@@ -3,7 +3,7 @@
     <a class="navbar-item" routerLink="/">
         <img src="assets/images/flockr_head_small.png" alt="flockr" width="30"> flockr
       </a>
-    <a class="navbar-item" [routerLink]="['/flocks', 'flockId1']">
+    <a class="navbar-item" routerLink="/flock">
       {{ currentFlock?.name }}
     </a>
     <div class="navbar-item">
@@ -30,7 +30,7 @@
           My Flocks
         </div>
         <div class="navbar-dropdown">
-          <a *ngFor="let flock of flocks" class="navbar-item " [routerLink]="['flocks', flock.$key]" (click)="setCurrentFlockId(flock.$key)">
+          <a *ngFor="let flock of flocks" class="navbar-item " (click)="setCurrentFlockId(flock.$key); toggleCollapse()">
                 {{flock.name}} <span *ngIf="flock.$key === user.currentFlockId" class="icon has-text-success">
                     <i class="fa fa-check-circle" aria-hidden="true"></i>
                 </span>
