@@ -29,26 +29,45 @@
     </p>
   </div>
 
-  <div class="field">
-    <label class="label">Weight (g)</label>
-    <div class="control">
-      <input type="text" id="weight" class="input" formControlName="weight" required>
+  <div class="level is-mobile">
+    <div class="level-left">
+      <div class="level-item">
+        <div class="field">
+        <label class="label">Weight (g)</label>
+        <div class="control">
+          <input type="number" id="weight" class="input" formControlName="weight">
+        </div>
+        <p *ngIf="formErrors.weight" class="help is-danger">
+          {{ formErrors.weight }}
+        </p>
+      </div>
+      </div>
+      <div class="level-item damaged-checkbox">
+        <div class="field">
+        <div class="control">
+          <label class="checkbox">
+            <input type="checkbox" id="damaged" formControlName="damaged">
+            Damaged
+          </label>
+        </div>
+      </div>
+      </div>
     </div>
-    <p *ngIf="formErrors.weight" class="help is-danger">
-      {{ formErrors.weight }}
+  </div>
+
+
+
+  <div class="field">
+    <label class="label">Notes</label>
+    <div class="control">
+      <textarea class="textarea" id="notes" placeholder="e.g. Anything interesting about this egg" formControlName="notes"></textarea>
+    </div>
+    <p *ngIf="formErrors.notes" class="help is-danger">
+      {{ formErrors.notes }}
     </p>
   </div>
 
-  <div class="field">
-    <div class="control">
-      <label class="checkbox">
-        <input type="checkbox" id="damaged" formControlName="damaged">
-        Damaged
-      </label>
-    </div>
-  </div>
-
-  <div *ngIf="eggForm.valid" class="help is-success">Form is valid</div>
-  <button type="submit" class="button" [disabled]="!eggForm.valid">Submit</button>
+  <button type="submit" class="button is-primary" [disabled]="!eggForm.valid">Submit</button>
+  <a class="button" (click)="location.back()">Cancel</a>
 
 </form>

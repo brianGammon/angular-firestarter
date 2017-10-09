@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { AuthService } from '../../core/auth.service';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -11,26 +13,27 @@ export class ChickenAddComponent implements OnInit {
   // eggs: FirebaseListObservable<any> = null;
   // flock: FirebaseObjectObservable<any> = null;
   chickenForm: FormGroup;
+  location: Location;
 
   formErrors = {
-    'name': '',
-    'dob': ''
+    'name': ''
   };
 
   validationMessages = {
     'name': {
       'required': 'Chicken name is required.'
-    },
-    'dob': {
-      'required': 'Date of birth is required.'
     }
   };
 
   constructor(
     private router: Router,
+    private locationService: Location,
     private fb: FormBuilder,
-    private db: AngularFireDatabase
-  ) { }
+    private db: AngularFireDatabase,
+    private authService: AuthService
+  ) {
+    this.location = locationService;
+  }
 
   ngOnInit() {
     this.chickenForm = this.fb.group({
@@ -38,10 +41,8 @@ export class ChickenAddComponent implements OnInit {
         Validators.required
       ]
       ],
-      'dob': ['', [
-        Validators.required
-      ]
-      ],
+      'breed': ['', []],
+      'hatched': ['', []],
       'photo': ['']
     });
 
@@ -51,17 +52,24 @@ export class ChickenAddComponent implements OnInit {
   }
 
   addChicken() {
-    console.log(this.chickenForm.value);
-    const flockId = 'flockId2';
-    const itemPath = 'chickens/' + flockId;
-    const items = this.db.list(itemPath);
+    this.authService.currentUserObservable.take(1).subscribe(authState => {
+      if (authState) {
+        this.db.object(`users/${authState['uid']}`).take(1).subscribe(user => {
+          const flockId = user.currentFlockId;
+          const itemPath = 'chickens/' + flockId;
+          const items = this.db.list(itemPath);
 
-    items.push(this.chickenForm.value)
-      .then(data => {
-        console.log(data);
-        this.router.navigateByUrl('/flock');
-      })
-      .catch(error => console.log(error))
+          items.push(this.chickenForm.value)
+            .then(data => {
+              console.log(data);
+              this.router.navigateByUrl('/flock');
+            })
+            .catch(error => console.log(error))
+        });
+      } else {
+        console.log('Not logged in, cannot add chicken');
+      }
+    });
   }
 
   // Updates validation state on form changes.

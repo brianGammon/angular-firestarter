@@ -2,32 +2,48 @@
   <div *ngIf="chickens | async; let chickens">
 
     <div class="level is-mobile">
-      <div class="level-item has-text-centered">
-        <a class="button" [routerLink]="['/eggs', previousDate]">
-              <span class="icon is-small">
-                <i class="fa fa-chevron-left"></i>
-              </span>
-            </a>
-      </div>
-      <div class="level-item has-text-centered">
-        <div>
-          <p class="heading">Date</p>
-          <p class="title is-4">{{ dateString | date }}</p>
-        </div>
-      </div>
+          <div class="level-item has-text-centered">
+              <a class="button" [routerLink]="['/eggs/day', previousDate]">
+                    <span class="icon is-small">
+                      <i class="fa fa-chevron-left"></i>
+                    </span>
+                  </a>
+            </div>
+            <div class="level-item has-text-centered">
+              <div>
+                <p class="heading">Date</p>
+                <p class="title is-4">{{ dateString | date }}</p>
+              </div>
+            </div>
 
-      <div class="level-item has-text-centered">
-          <a class="button" [routerLink]="['/eggs', nextDate]">
-              <span class="icon is-small">
-                <i class="fa fa-chevron-right"></i>
-              </span>
-            </a>
-      </div>
+            <div class="level-item has-text-centered">
+                <a class="button" [routerLink]="['/eggs/day', nextDate]">
+                    <span class="icon is-small">
+                      <i class="fa fa-chevron-right"></i>
+                    </span>
+                  </a>
+            </div>
+
+            <div class="level-item has-text-centered">
+                <a class="button" [routerLink]="['/eggs/day', nextDate]">
+                    <span class="icon is-small">
+                      <i class="fa fa-calendar"></i>
+                    </span>
+                  </a>
+            </div>
+
+            <div class="level-item has-text-centered">
+                <div>
+                  <p class="heading">Eggs</p>
+                  <p class="title is-4">{{ eggs.length }}</p>
+                </div>
+              </div>
+
     </div>
 
     <hr>
 
-    <div class="level is-mobile">
+    <!-- <div class="level is-mobile">
       <div class="level-item has-text-centered">
         <div>
           <p class="heading">Eggs Laid</p>
@@ -39,22 +55,25 @@
       </div>
     </div>
 
-    <hr>
+    <hr> -->
 
     <div class="egg-list">
       <div *ngFor="let egg of eggs" class="media">
-        <div class="media-left">
-          <p class="image is-64x64">
-            <a [routerLink]="['/chicken', egg.chicken]"><img [src]="chickens[egg.chicken].photo ? chickens[egg.chicken].photo : 'http://bulma.io/images/placeholders/128x128.png'"></a>
-          </p>
-        </div>
+
         <div class="media-content">
           <div class="content">
             <p>
-              <a [routerLink]="['/chicken', egg.chicken]"><strong>{{ chickens[egg.chicken].name }}</strong></a>
-              <br> Weight: {{ egg.weight }}g <span *ngIf="egg.damaged" class="icon has-text-danger">
+              <span>
+                <a [routerLink]="['/chicken', egg.chicken]">{{ chickens[egg.chicken].name }}</a>
+              </span>
+            </p>
+            <p *ngIf="egg.weight">
+              <span>
+                {{ egg.weight }}g
+              </span>
+              <span *ngIf="egg.damaged" class="icon has-text-danger">
                   <i class="fa fa-warning"></i>
-                </span>
+              </span>
               <!-- <br> <span>This egg was smashed by the other chickens</span> -->
             </p>
           </div>

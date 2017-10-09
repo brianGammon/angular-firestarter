@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { AuthService } from '../../core/auth.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'top-nav',
@@ -28,6 +29,8 @@ export class TopNavComponent implements OnInit {
   user: any;
   flocks: any;
   currentFlock: any;
+  dayString: string = moment().format('DD');
+  monthString: string = moment().format('YYYY-MM');
 
   // collapse:string = "closed";
   show = false;
@@ -63,6 +66,10 @@ export class TopNavComponent implements OnInit {
     this.show = !this.show
     // this.collapse = this.collapse == "open" ? 'closed' : 'open';
 
+  }
+
+  signOut() {
+    this.authService.signOut();
   }
 
   setCurrentFlockId(flockId: string) {

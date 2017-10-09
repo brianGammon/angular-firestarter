@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
 import * as moment from 'moment';
@@ -14,12 +15,12 @@ export class EggsAddComponent implements OnInit {
   chickens: FirebaseListObservable<any> = null;
   // flock: FirebaseObjectObservable<any> = null;
   eggForm: FormGroup;
+  location: Location;
+  private userId: string;
 
   formErrors = {
     'dateLaid': '',
-    'chickenId': '',
-    'weight': '',
-    'damaged': ''
+    'chickenId': ''
   };
 
   validationMessages = {
@@ -28,22 +29,19 @@ export class EggsAddComponent implements OnInit {
     },
     'chickenId': {
       'required': 'Chicken ID is required.'
-    },
-    'weight': {
-      'required': 'Weight is required.'
-    },
-    'damaged': {
-      'required': 'Damaged is required.'
     }
   };
 
   constructor(
     private router: Router,
+    public locationService: Location,
     private route: ActivatedRoute,
     private authService: AuthService,
     private fb: FormBuilder,
     private db: AngularFireDatabase
-  ) { }
+  ) {
+    this.location = locationService
+  }
 
   ngOnInit() {
     const defaultDate = this.route.snapshot.queryParamMap.get('date') || moment().format('YYYY-MM-DD');
@@ -52,6 +50,7 @@ export class EggsAddComponent implements OnInit {
     this.authService.currentUserObservable.subscribe(authState => {
       if (authState) {
         this.db.object('/users/' + authState['uid']).subscribe(user => {
+          this.userId = user.$key;
           this.flockId = user.currentFlockId;
           console.log(this.flockId);
 
@@ -69,11 +68,9 @@ export class EggsAddComponent implements OnInit {
         Validators.required
       ]
       ],
-      'weight': ['', [
-        Validators.required
-      ]
-      ],
-      'damaged': ['']
+      'weight': [''],
+      'damaged': [''],
+      'notes': ['']
     });
 
     this.eggForm.valueChanges.subscribe(data => this.onValueChanged(data));
@@ -88,12 +85,15 @@ export class EggsAddComponent implements OnInit {
       'date': this.eggForm.value['dateLaid'],
       'chicken': this.eggForm.value['chickenId'],
       'weight': this.eggForm.value['weight'],
-      'damaged': !!this.eggForm.value['damaged']
+      'damaged': !!this.eggForm.value['damaged'],
+      'notes': this.eggForm.value['notes'],
+      'userId': this.userId,
+      'modified': moment().utc().toISOString()
     }
     items.push(newEgg)
       .then(data => {
         console.log(data);
-        this.router.navigateByUrl('/eggs/' + this.eggForm.value['dateLaid']);
+        this.router.navigateByUrl('/eggs/day/' + this.eggForm.value['dateLaid']);
       })
       .catch(error => console.log(error))
   }
