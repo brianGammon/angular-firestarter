@@ -5,7 +5,6 @@ import { AuthGuard } from './core/auth.guard';
 import { UserLoginComponent } from './ui/user-login/user-login.component';
 // import { ItemsListComponent } from './items/items-list/items-list.component';
 // import { UploadsListComponent } from './uploads/uploads-list/uploads-list.component';
-import { ReadmePageComponent } from './ui/readme-page/readme-page.component';
 import { EggsDailyComponent } from './ui/eggs-daily/eggs-daily.component';
 import { EggsAddComponent } from './ui/eggs-add/eggs-add.component';
 import { ChickenProfileComponent } from './ui/chicken-profile/chicken-profile.component';

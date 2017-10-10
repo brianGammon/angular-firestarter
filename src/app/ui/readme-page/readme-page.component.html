@@ -1,7 +1,0 @@
-<div *ngIf="flock | async; let flock">
-  <h2>{{flock.name}}</h2>
-
-  <div *ngFor="let chicken of getKeys(flock.chickens)" class="card">
-    {{flock.chickens[chicken].name}}
-  </div>
-</div>

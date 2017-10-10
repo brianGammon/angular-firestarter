@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../core/auth.service';
+import { Router } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -10,7 +11,7 @@ import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angula
 export class UserFormComponent implements OnInit {
 
   userForm: FormGroup;
-  newUser = true; // to toggle login or signup form
+  newUser = false; // to toggle login or signup form
   passReset = false; // set to true when password reset is triggered
   formErrors = {
     'email': '',
@@ -29,7 +30,11 @@ export class UserFormComponent implements OnInit {
     }
   };
 
-  constructor(private fb: FormBuilder, private auth: AuthService) { }
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private auth: AuthService
+  ) { }
 
   ngOnInit(): void {
     this.buildForm();
@@ -44,7 +49,9 @@ export class UserFormComponent implements OnInit {
   }
 
   login(): void {
-    this.auth.emailLogin(this.userForm.value['email'], this.userForm.value['password'])
+    this.auth.emailLogin(this.userForm.value['email'], this.userForm.value['password']).then(data => {
+      this.router.navigateByUrl('/flock');
+    });
   }
 
   resetPassword() {
