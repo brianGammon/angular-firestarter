@@ -1,10 +1,15 @@
 <form [formGroup]="eggForm" (ngSubmit)="addEgg()">
 
-  <h3>Add Egg</h3>
-  <hr>
+  <div class="level is-mobile">
+    <div class="level-left">
+      <div class="level-item heading">
+        Add Egg
+      </div>
+    </div>
+  </div>
 
   <div class="field">
-      <label class=""label>Date</label>
+      <label class="label">Date</label>
       <div class="control">
           <input type="date" id="dateLaid" class="input" formControlName="dateLaid" required>
       </div>
@@ -35,7 +40,7 @@
         <div class="field">
         <label class="label">Weight (g)</label>
         <div class="control">
-          <input type="number" id="weight" class="input" formControlName="weight">
+          <input type="number" pattern="[0-9]+([,\.][0-9]+)?" id="weight" class="input" formControlName="weight">
         </div>
         <p *ngIf="formErrors.weight" class="help is-danger">
           {{ formErrors.weight }}

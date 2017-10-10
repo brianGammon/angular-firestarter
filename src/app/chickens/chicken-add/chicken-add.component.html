@@ -1,7 +1,11 @@
 <form [formGroup]="chickenForm" (ngSubmit)="addChicken()">
-
-  <h3>Add Chicken</h3>
-  <hr>
+  <div class="level is-mobile">
+    <div class="level-left">
+      <div class="level-item heading">
+        Add Chicken
+      </div>
+    </div>
+  </div>
 
   <label for="name">Name</label>
   <input type="text" id="name" class="input" formControlName="name" required>

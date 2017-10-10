@@ -45,6 +45,7 @@ export class EggsAddComponent implements OnInit {
 
   ngOnInit() {
     const defaultDate = this.route.snapshot.queryParamMap.get('date') || moment().format('YYYY-MM-DD');
+    const defaultChickenId = this.route.snapshot.queryParamMap.get('chickenId');
     console.log(defaultDate);
 
     this.authService.currentUserObservable.subscribe(authState => {
@@ -64,7 +65,7 @@ export class EggsAddComponent implements OnInit {
       'dateLaid': [defaultDate, [
         Validators.required
       ]],
-      'chickenId': ['', [
+      'chickenId': [defaultChickenId ? defaultChickenId : '', [
         Validators.required
       ]
       ],
