@@ -8,9 +8,9 @@
     },
     "eggs": {
       ".write": "auth != null"
+    },
+    "chickens": {
+      ".write": "auth != null"
     }
-
-
-
   }
 }
