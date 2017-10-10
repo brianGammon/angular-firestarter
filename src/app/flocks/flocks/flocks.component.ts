@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
-import { AuthService } from '../../core/auth.service'
+import { AuthService } from '../../shared/auth.service'
 
 @Component({
   templateUrl: './flocks.component.html',

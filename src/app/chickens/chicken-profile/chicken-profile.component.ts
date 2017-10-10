@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from '../../core/auth.service';
+import { AuthService } from '../../shared/auth.service';
 import * as _ from 'lodash';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 

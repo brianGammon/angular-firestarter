@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../core/auth.service';
+import { AuthService } from '../../shared/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
 import * as moment from 'moment';

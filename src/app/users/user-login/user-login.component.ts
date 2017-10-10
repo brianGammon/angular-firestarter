@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../core/auth.service';
+import { AuthService } from '../../shared/auth.service';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'user-form',
-  templateUrl: './user-form.component.html',
-  styleUrls: ['./user-form.component.scss']
+  templateUrl: './user-login.component.html',
+  styleUrls: ['./user-login.component.scss']
 })
-export class UserFormComponent implements OnInit {
+export class UserLoginComponent implements OnInit {
 
   userForm: FormGroup;
   newUser = false; // to toggle login or signup form

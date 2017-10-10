@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
-import { AuthService } from '../../core/auth.service';
+import { AuthService } from '../../shared/auth.service';
 import * as moment from 'moment';
 
 @Component({

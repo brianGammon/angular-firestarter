@@ -11,11 +11,13 @@ import { environment } from '../environments/environment';
 import { AngularFireModule } from 'angularfire2';
 export const firebaseConfig = environment.firebaseConfig;
 
-import { CoreModule } from './core/core.module';
 
-import { SharedModule } from './shared/shared.module'
+import { SharedModule } from './shared/shared.module';
 
-import { UiModule } from './ui/shared/ui.module';
+import { FlocksModule } from './flocks/flocks.module';
+import { EggsModule } from './eggs/eggs.module';
+import { ChickensModule } from './chickens/chicken.module';
+import { UsersModule } from './users/users.module';
 
 
 @NgModule({
@@ -26,9 +28,11 @@ import { UiModule } from './ui/shared/ui.module';
     BrowserModule,
     HttpModule,
     AppRoutingModule,
-    CoreModule,
     SharedModule,
-    UiModule,
+    FlocksModule,
+    EggsModule,
+    ChickensModule,
+    UsersModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule
   ],

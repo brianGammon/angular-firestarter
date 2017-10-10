@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthService } from '../../core/auth.service';
+import { AuthService } from '../../shared/auth.service';
 import * as moment from 'moment';
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';

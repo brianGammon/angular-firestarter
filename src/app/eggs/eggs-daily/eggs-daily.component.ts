@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
-import { AuthService } from '../../core/auth.service'
+import { AuthService } from '../../shared/auth.service'
 import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database';
 
 @Component({
